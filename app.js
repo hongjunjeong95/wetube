@@ -13,6 +13,9 @@ import routes from "./routes";
 //express를 import하고 const app에 저장한다.
 const app = express();
 
+// view engine을 위한 pug 설정
+app.set("view engine", "pug");
+
 //app을 이용해서 middleware를 추가해준다.
 //cookieParser는 사용자 인증에 필요한 cookie를 전달 받는다.
 app.use(cookieParser());
