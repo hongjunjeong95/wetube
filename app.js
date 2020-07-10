@@ -5,13 +5,17 @@ import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 
+import { localsMiddleware } from "./middlewares";
+import routes from "./routes";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import globalRouter from "./routers/globalRouter";
-import routes from "./routes";
 
 //express를 import하고 const app에 저장한다.
 const app = express();
+
+//helmet은 application을 보다 더 안전하게 만들어준다.
+app.use(helmet());
 
 // view engine을 위한 pug 설정
 app.set("view engine", "pug");
@@ -25,11 +29,10 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//helmet은 application을 보다 더 안전하게 만들어준다.
-app.use(helmet());
-
 //margan은 application에서 발생하는 모든 일을 기록한다.
 app.use(morgan("dev"));
+
+app.use(localsMiddleware);
 
 //3개의 router를 사용했다.
 app.use(routes.home, globalRouter);
