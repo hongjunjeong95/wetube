@@ -37,6 +37,6 @@ app.use(localsMiddleware);
 //3개의 router를 사용했다.
 app.use(routes.home, globalRouter);
 app.use(routes.users, userRouter);
-app.use(routes.videos, videoRouter);
+app.use(routes.home, videoRouter);
 
 export default app;
