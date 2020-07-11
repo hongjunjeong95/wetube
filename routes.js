@@ -24,7 +24,7 @@ const VIDEO_DETAIL = "/:id";
 const EDIT_VIDEO = "/:id/edit";
 const DELETE_VIDEO = "/:id/delete";
 
-const routes = {
+const routess = {
   home: HOME,
   join: JOIN,
   login: LOGIN,
@@ -41,4 +41,4 @@ const routes = {
   deleteVideo: DELETE_VIDEO,
 };
 
-export default routes;
+export default routess;
