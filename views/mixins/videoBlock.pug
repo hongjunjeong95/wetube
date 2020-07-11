@@ -1,0 +1,7 @@
+//- 웹사이트에서 반복되는 html 코드를 복붙하지 않고 계속 재활용하는 방법을 mixin이라고 한다.
+
+mixin videoBlock(video={})
+  .videoBlock
+    video.videoBlock__thumbnail(src=video.videoFile, controls=true)
+    h4.videoBlock__title=video.title
+    h6.videoBlock__views=video.views
