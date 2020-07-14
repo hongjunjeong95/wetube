@@ -20,6 +20,12 @@ app.use(helmet());
 // view engine을 위한 pug 설정
 app.set("view engine", "pug");
 
+// express.static("uploads")는 directory에서 file을 보내주는
+// middleware다. 주어진 directory에서 file을 전달하는
+// 새로운 middleware function이다. 따라서 어떤 종류의 controller나 view같은
+// 것은 확인하지 않고 file만 확인한다.
+app.use("/uploads", express.static("uploads"));
+
 //app을 이용해서 middleware를 추가해준다.
 //cookieParser는 사용자 인증에 필요한 cookie를 전달 받는다.
 app.use(cookieParser());
