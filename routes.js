@@ -24,7 +24,7 @@ const VIDEO_DETAIL = "/:id";
 const EDIT_VIDEO = "/:id/edit";
 const DELETE_VIDEO = "/:id/delete";
 
-const routess = {
+const routers = {
   home: HOME,
   join: JOIN,
   login: LOGIN,
@@ -60,7 +60,13 @@ const routess = {
     }
   },
 
-  deleteVideo: DELETE_VIDEO,
+  deleteVideo: (id) => {
+    if (id) {
+      return `/videos/${id}/delete`;
+    } else {
+      return DELETE_VIDEO;
+    }
+  },
 };
 
-export default routess;
+export default routers;
