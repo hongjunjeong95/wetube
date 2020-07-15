@@ -24,6 +24,8 @@ app.set("view engine", "pug");
 // middleware다. 주어진 directory에서 file을 전달하는
 // 새로운 middleware function이다. 따라서 어떤 종류의 controller나 view같은
 // 것은 확인하지 않고 file만 확인한다.
+// ** 하지만 static file을 사용하는 것은 좋지 않다.
+// user가 생성하는 파일들은 server와 분리되어야 한다.
 app.use("/uploads", express.static("uploads"));
 
 //app을 이용해서 middleware를 추가해준다.

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const VideoSchma = new mongoose.Schema({
-  fireUrl: {
+  fileUrl: {
     type: String,
     required: "File URL is required",
   },

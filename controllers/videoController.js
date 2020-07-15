@@ -27,7 +27,7 @@ export const postUpload = async (req, res) => {
     file: { path },
   } = req;
   const newVideo = await Video.create({
-    fireUrl: path,
+    fileUrl: path,
     title,
     description,
   });
@@ -38,8 +38,17 @@ export const postUpload = async (req, res) => {
   // res.redirect(routes.videoDetail(324393));
 };
 
-export const videoDetail = (req, res) =>
-  res.render("videoDetail", { pageTitle: "Video Detail" });
+export const videoDetail = async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+  try {
+    const video = await Video.findById(id);
+    res.render("videoDetail", { pageTitle: "Video Detail", video });
+  } catch (error) {
+    res.redirect(routes.home);
+  }
+};
 
 export const editVideo = (req, res) =>
   res.render("editVideo", { pageTitle: "Edit Video" });
