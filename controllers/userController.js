@@ -1,4 +1,5 @@
 import routes from "../routes";
+import User from "../models/User";
 
 //get방식 join
 export const getJoin = (req, res) => {
@@ -7,7 +8,7 @@ export const getJoin = (req, res) => {
 };
 
 //post방식 join
-export const postJoin = (req, res) => {
+export const postJoin = async (req, res) => {
   //사용자로부터 입력 값을 받는다.
   const {
     body: { name, email, password, password2 },
@@ -19,7 +20,16 @@ export const postJoin = (req, res) => {
     res.status(400);
     res.render("join", { pageTitle: "Join" });
   } else {
-    // To Do: Register User
+    try {
+      const user = await User({
+        name,
+        email,
+      });
+      await User.register(user, password);
+    } catch (error) {
+      console.log(error);
+    }
+
     // To Do: Log user in
     res.redirect(routes.home);
   }
