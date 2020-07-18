@@ -45,6 +45,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // margan은 application에서 발생하는 모든 일을 기록한다.
 app.use(morgan("dev"));
 
+app.use(
+  session({
+    secret: process.env.COOKIE_SECRET,
+    resave: true,
+    saveUninitialized: false,
+  })
+);
 // express-session을 설치해주자.
 app.use(passport.initialize());
 app.use(passport.session());
