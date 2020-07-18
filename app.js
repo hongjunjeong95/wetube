@@ -5,7 +5,9 @@ import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import passport from "passport";
+import mongoose from "mongoose";
 import session from "express-session";
+import MongoStore from "connect-mongo";
 
 import { localsMiddleware } from "./middlewares";
 import routes from "./routes";
@@ -17,6 +19,7 @@ import "./passport";
 
 // express를 import하고 const app에 저장한다.
 const app = express();
+const CookieStore = MongoStore(session);
 
 // helmet은 application을 보다 더 안전하게 만들어준다.
 app.use(helmet());
@@ -50,6 +53,7 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     resave: true,
     saveUninitialized: false,
+    store: new CookieStore({ mongooseConnection: mongoose.connection }),
   })
 );
 // express-session을 설치해주자.
