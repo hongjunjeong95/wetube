@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-dotenv.config();
 import "./models/Video";
+
+dotenv.config();
 
 mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,

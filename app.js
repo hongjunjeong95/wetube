@@ -4,6 +4,8 @@ import morgan from "morgan";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
+import passport from "passport";
+import session from "express-session";
 
 import { localsMiddleware } from "./middlewares";
 import routes from "./routes";
@@ -11,10 +13,12 @@ import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import globalRouter from "./routers/globalRouter";
 
-//express를 import하고 const app에 저장한다.
+import "./passport";
+
+// express를 import하고 const app에 저장한다.
 const app = express();
 
-//helmet은 application을 보다 더 안전하게 만들어준다.
+// helmet은 application을 보다 더 안전하게 만들어준다.
 app.use(helmet());
 
 // view engine을 위한 pug 설정
@@ -29,21 +33,25 @@ app.set("view engine", "pug");
 app.use("/uploads", express.static("uploads"));
 app.use("/static", express.static("static"));
 
-//app을 이용해서 middleware를 추가해준다.
-//cookieParser는 사용자 인증에 필요한 cookie를 전달 받는다.
+// app을 이용해서 middleware를 추가해준다.
+// cookieParser는 사용자 인증에 필요한 cookie를 전달 받는다.
 app.use(cookieParser());
 
-//bodyParser는 사용자가 웹사이트로 전달하는 정보들(request 정보에서
-//form이나 JSON 형태로 된 body를 검사한다.
+// bodyParser는 사용자가 웹사이트로 전달하는 정보들(request 정보에서)
+// form이나 JSON 형태로 된 body를 검사한다.
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//margan은 application에서 발생하는 모든 일을 기록한다.
+// margan은 application에서 발생하는 모든 일을 기록한다.
 app.use(morgan("dev"));
+
+// express-session을 설치해주자.
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(localsMiddleware);
 
-//3개의 router를 사용했다.
+// 3개의 router를 사용했다.
 app.use(routes.home, globalRouter);
 app.use(routes.users, userRouter);
 app.use(routes.videos, videoRouter);
