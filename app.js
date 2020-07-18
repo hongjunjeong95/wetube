@@ -56,9 +56,10 @@ app.use(
     store: new CookieStore({ mongooseConnection: mongoose.connection }),
   })
 );
+
 // express-session을 설치해주자.
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.initialize()); // passport 구동
+app.use(passport.session()); // connect session
 
 app.use(localsMiddleware);
 
