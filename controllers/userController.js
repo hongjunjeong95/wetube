@@ -43,6 +43,7 @@ export const postLogin = passport.authenticate("local", {
   successRedirect: routes.home,
 });
 
+// Github Login
 export const githubLogin = passport.authenticate("github");
 
 // 이 함수는 사용자가 github에 들어왔을 때 실행이 된다.
@@ -50,9 +51,11 @@ export const githubLoginCallback = async (_, __, profile, cb) => {
   const {
     _json: { id, avatar_url: avatarUrl, name, email },
   } = profile;
+  console.log("profile._json : ", profile._json);
   try {
     const user = await User.findOne({ email });
-    console.log("i am user:" + user);
+    // console.log("i am github user:" + user.avatarUrl);
+
     if (user) {
       user.githubId = id;
       user.save();
@@ -74,6 +77,7 @@ export const postGithubLogIn = (req, res) => {
   res.redirect(routes.home);
 };
 
+// Facebook Login
 export const facebookLogin = passport.authenticate("facebook");
 
 // 이 함수는 사용자가 facebook에 들어왔을 때 실행이 된다.
