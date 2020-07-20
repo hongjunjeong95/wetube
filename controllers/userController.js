@@ -74,6 +74,69 @@ export const postGithubLogIn = (req, res) => {
   res.redirect(routes.home);
 };
 
+export const facebookLogin = passport.authenticate("facebook");
+
+// 이 함수는 사용자가 facebook에 들어왔을 때 실행이 된다.
+export const facebookLoginCallback = async (_, __, profile, cb) => {
+  const {
+    _json: { id, name, email },
+  } = profile;
+  try {
+    const user = await User.findOne({ email });
+    if (user) {
+      user.facebookId = id;
+      user.avatarUrl = `https://graph.facebook.com/${id}/picture?type=large`;
+      user.save();
+      return cb(null, user);
+    }
+    const newUser = await User.create({
+      email,
+      name,
+      facebookId: id,
+      avatarUrl: `https://graph.facebook.com/${id}/picture?type=large`,
+    });
+    return cb(null, newUser);
+  } catch (error) {
+    return cb(error);
+  }
+};
+
+export const postFacebookLogIn = (req, res) => {
+  res.redirect(routes.home);
+};
+
+export const instagramLogin = passport.authenticate("instagram");
+
+// 이 함수는 사용자가 github에 들어왔을 때 실행이 된다.
+export const instagramLoginCallback = async (_, __, profile, cb) => {
+  console.log(profile, cb);
+  // const {
+  //   _json: { id, avatar_url: avatarUrl, name, email },
+  // } = profile;
+  // try {
+  //   const user = await User.findOne({ email });
+  //   console.log("i am user:" + user);
+  //   if (user) {
+  //     user.githubId = id;
+  //     user.save();
+  //     return cb(null, user);
+  //   }
+  //   const newUser = await User.create({
+  //     email,
+  //     name,
+  //     githubId: id,
+  //     avatarUrl,
+  //   });
+  //   return cb(null, newUser);
+  // } catch (error) {
+  //   return cb(error);
+  // }
+};
+
+export const postInstagramLogIn = (req, res) => {
+  res.redirect(routes.home);
+};
+
 export const logout = (req, res) => {
   req.logout();
   res.redirect(routes.home);
@@ -89,7 +152,7 @@ export const userDetail = async (req, res) => {
   } = req;
   try {
     const user = await User.findById(id);
-    res.render("userDetail", { pageTitle: "User Detail" });
+    res.render("userDetail", { pageTitle: "User Detail", user });
   } catch (error) {
     res.redirect(routes.home);
   }

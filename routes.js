@@ -1,3 +1,5 @@
+/* eslint-disable arrow-parens */
+/* eslint-disable prettier/prettier */
 // Global
 const HOME = "/";
 const JOIN = "/join";
@@ -29,6 +31,16 @@ const DELETE_VIDEO = "/:id/delete";
 
 const GITHUB = "/auth/github";
 const GITHUB_CALLBACK = "/auth/github/callback";
+
+// Facebook
+
+const FB = "/auth/facebook";
+const FB_CALLBACK = "/auth/facebook/callback";
+
+// Instagram
+
+// const INSTAGRAM = "/auth/instagram";
+// const INSTAGRAM_CALLBACK = "/auth/instagram/callback";
 
 const routers = {
   home: HOME,
@@ -71,6 +83,10 @@ const routers = {
   github: GITHUB,
   githubCallback: GITHUB_CALLBACK,
   me: ME,
+  facebook: FB,
+  facebookCallback: FB_CALLBACK,
+  // instagram: INSTAGRAM,
+  // instagramCallback: INSTAGRAM_CALLBACK,
 };
 
 export default routers;
