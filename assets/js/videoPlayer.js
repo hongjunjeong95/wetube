@@ -2,6 +2,7 @@ const videoContainer = document.getElementById("jsVideoPlayer");
 const videoPlayer = document.querySelector("#jsVideoPlayer video");
 const playBtn = document.getElementById("jsPlayButton");
 const volumeBtn = document.getElementById("jsVolumeBtn");
+const fullScrnBtn = document.getElementById("jsFullScreen");
 
 // play()와 pause()는 Read Only이기 때문에 boolean 값을 할당하지
 // 않고 단순히 메소드를 사용한다.
@@ -27,9 +28,24 @@ function handleVolumeClick() {
   }
 }
 
+function goFullScreen() {
+  videoContainer.requestFullscreen();
+  fullScrnBtn.innerHTML = '<i class="fas fa-compress"></i>';
+  fullScrnBtn.removeEventListener("click", goFullScreen);
+  fullScrnBtn.addEventListener("click", exitFullScreen);
+}
+
+function exitFullScreen() {
+  document.exitFullscreen();
+  fullScrnBtn.innerHTML = '<i class="fas fa-expand"></i>';
+  fullScrnBtn.removeEventListener("click", exitFullScreen);
+  fullScrnBtn.addEventListener("click", goFullScreen);
+}
+
 function init() {
   playBtn.addEventListener("click", handlePlayClick);
   volumeBtn.addEventListener("click", handleVolumeClick);
+  fullScrnBtn.addEventListener("click", goFullScreen);
 }
 
 if (videoContainer) {
