@@ -180,6 +180,7 @@ export const postEditProfile = async (req, res) => {
     res.redirect(routes.editProfile);
   }
 };
+
 // oldPasswod
 // newPassword
 // newPassword1

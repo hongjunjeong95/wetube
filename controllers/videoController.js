@@ -34,17 +34,16 @@ export const postUpload = async (req, res) => {
     body: { title, description },
     file: { path },
   } = req;
-  // console.log(title, description);
   const newVideo = await Video.create({
     fileUrl: path,
     title,
     description,
+    creator: req.user.id,
   });
-  console.log(newVideo);
+  console.log("this is req.user of multer:", req.user);
+  req.user.videos.push(newVideo.id);
+  req.user.save();
   res.redirect(routes.videoDetail(newVideo.id));
-  // To Do: Upload and Save Video
-  res.render("upload", { pageTitle: "Upload" });
-  // res.redirect(routes.videoDetail(324393));
 };
 
 export const videoDetail = async (req, res) => {
@@ -52,7 +51,9 @@ export const videoDetail = async (req, res) => {
     params: { id },
   } = req;
   try {
-    const video = await Video.findById(id);
+    // populate는 객체를 데려오는 함수다.
+    const video = await Video.findById(id).populate("creator");
+    console.log(video);
     res.render("videoDetail", { pageTitle: video.title, video });
   } catch (error) {
     res.redirect(routes.home);
@@ -91,7 +92,9 @@ export const deleteVideo = async (req, res) => {
   } = req;
   try {
     await Video.findOneAndRemove({ _id: id });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
   res.redirect(routes.home);
 };
 // res.render("deleteVideo", { pageTitle: "Delete Video" });

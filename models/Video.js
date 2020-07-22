@@ -1,5 +1,14 @@
 import mongoose from "mongoose";
 
+const zero = {
+  body: {
+    type: String,
+    required: "file url",
+  },
+};
+
+console.log(zero);
+
 const VideoSchema = new mongoose.Schema({
   fileUrl: {
     type: String,
@@ -24,6 +33,10 @@ const VideoSchema = new mongoose.Schema({
       ref: "Comment",
     },
   ],
+  creator: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 const model = mongoose.model("Video", VideoSchema);
