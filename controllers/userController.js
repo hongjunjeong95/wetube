@@ -4,7 +4,6 @@ import User from "../models/User";
 
 // get방식 join
 export const getJoin = (req, res) => {
-  console.log(req.body);
   res.render("join", { pageTitle: "Join" });
 };
 
@@ -14,7 +13,6 @@ export const postJoin = async (req, res, next) => {
   const {
     body: { name, email, password, password2 },
   } = req;
-  console.log(req.body);
   // verify password
   if (password !== password2) {
     res.status(400);
@@ -50,7 +48,6 @@ export const githubLoginCallback = async (_, __, profile, cb) => {
   const {
     _json: { id, avatar_url: avatarUrl, name, email },
   } = profile;
-  console.log("profile._json : ", profile._json);
   try {
     const user = await User.findOne({ email });
     // console.log("i am github user:" + user.avatarUrl);
@@ -112,7 +109,6 @@ export const instagramLogin = passport.authenticate("instagram");
 
 // 이 함수는 사용자가 github에 들어왔을 때 실행이 된다.
 export const instagramLoginCallback = async (_, __, profile, cb) => {
-  console.log(profile, cb);
   // const {
   //   _json: { id, avatar_url: avatarUrl, name, email },
   // } = profile;
@@ -155,7 +151,6 @@ export const userDetail = async (req, res) => {
   } = req;
   try {
     const user = await User.findById(id).populate("videos");
-    console.log(user);
     res.render("userDetail", { pageTitle: "User Detail", user });
   } catch (error) {
     res.redirect(routes.home);
