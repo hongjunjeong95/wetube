@@ -1,8 +1,11 @@
+/* eslint-disable arrow-parens */
 const videoContainer = document.getElementById("jsVideoPlayer");
 const videoPlayer = document.querySelector("#jsVideoPlayer video");
 const playBtn = document.getElementById("jsPlayButton");
 const volumeBtn = document.getElementById("jsVolumeBtn");
 const fullScrnBtn = document.getElementById("jsFullScreen");
+const currentTime = document.getElementById("currentTime");
+const totalTime = document.getElementById("totalTime");
 
 // play()와 pause()는 Read Only이기 때문에 boolean 값을 할당하지
 // 않고 단순히 메소드를 사용한다.
@@ -58,10 +61,39 @@ const exitFullScreen = () => {
   fullScrnBtn.addEventListener("click", goFullScreen);
 };
 
+const formatDate = (seconds) => {
+  const secondsNumber = parseInt(seconds, 10);
+  let hours = Math.floor(secondsNumber / 3600);
+  let minutes = Math.floor((secondsNumber - hours * 3600) / 60);
+  let totalSeconds = secondsNumber - hours * 3600 - minutes * 60;
+
+  if (hours < 10) {
+    hours = `0${hours}`;
+  }
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+  if (seconds < 10) {
+    totalSeconds = `0${totalSeconds}`;
+  }
+  return `${hours}:${minutes}:${totalSeconds}`;
+};
+
+const getCurrentTime = () => {
+  currentTime.innerHTML = formatDate(Math.floor(videoPlayer.currentTime));
+};
+
+const setTotalTime = () => {
+  const totalTimeString = formatDate(videoPlayer.duration);
+  totalTime.innerHTML = totalTimeString;
+  setInterval(getCurrentTime, 1000);
+};
+
 const init = () => {
   playBtn.addEventListener("click", handlePlayClick);
   volumeBtn.addEventListener("click", handleVolumeClick);
   fullScrnBtn.addEventListener("click", goFullScreen);
+  videoPlayer.addEventListener("loadedmetadata", setTotalTime);
 };
 
 if (videoContainer) {

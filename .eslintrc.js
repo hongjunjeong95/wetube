@@ -8,7 +8,7 @@ module.exports = {
     commonjs: true,
     node: true,
   },
-  extends: ["airbnb-base", "plugin:prettier/recommended"],
+  extends: ["airbnb-base", "plugin:prettier/recommended", "prettier"],
   plugins: ["import", "html"],
   rules: {
     // "off" or 0 - turn the rule off
