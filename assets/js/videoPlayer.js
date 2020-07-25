@@ -1,3 +1,5 @@
+import axios from "axios";
+
 /* eslint-disable arrow-parens */
 const videoContainer = document.getElementById("jsVideoPlayer");
 const videoPlayer = document.querySelector("#jsVideoPlayer video");
@@ -7,6 +9,17 @@ const fullScrnBtn = document.getElementById("jsFullScreen");
 const currentTime = document.getElementById("currentTime");
 const totalTime = document.getElementById("totalTime");
 const volumeRange = document.getElementById("jsVolume");
+
+const registerView = async () => {
+  const videoId = window.location.href.split("/videos/")[1];
+  // fetch(`/api/${videoId}/view`, {
+  //   method: "POST",
+  // });
+  const response = await axios({
+    url: `/api/${videoId}/view`,
+    method: "POST",
+  });
+};
 
 // play()와 pause()는 Read Only이기 때문에 boolean 값을 할당하지
 // 않고 단순히 메소드를 사용한다.
@@ -93,6 +106,7 @@ const setTotalTime = () => {
 };
 
 const handleEnded = () => {
+  registerView();
   videoPlayer.currentTime = 0;
   playBtn.innerHTML = '<i class="fas fa-play"></i>';
 };

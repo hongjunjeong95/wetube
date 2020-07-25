@@ -42,6 +42,11 @@ const FB_CALLBACK = "/auth/facebook/callback";
 // const INSTAGRAM = "/auth/instagram";
 // const INSTAGRAM_CALLBACK = "/auth/instagram/callback";
 
+// API
+
+const API = "/api";
+const REGISTER_VIEW = "/:id/view";
+
 const routers = {
   home: HOME,
   join: JOIN,
@@ -85,6 +90,8 @@ const routers = {
   me: ME,
   facebook: FB,
   facebookCallback: FB_CALLBACK,
+  api: API,
+  registerView: REGISTER_VIEW,
   // instagram: INSTAGRAM,
   // instagramCallback: INSTAGRAM_CALLBACK,
 };
