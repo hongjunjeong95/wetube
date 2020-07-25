@@ -10,12 +10,12 @@ const currentTime = document.getElementById("currentTime");
 const totalTime = document.getElementById("totalTime");
 const volumeRange = document.getElementById("jsVolume");
 
-const registerView = async () => {
+const registerView = () => {
   const videoId = window.location.href.split("/videos/")[1];
   // fetch(`/api/${videoId}/view`, {
   //   method: "POST",
   // });
-  const response = await axios({
+  axios({
     url: `/api/${videoId}/view`,
     method: "POST",
   });
@@ -24,6 +24,7 @@ const registerView = async () => {
 // play()와 pause()는 Read Only이기 때문에 boolean 값을 할당하지
 // 않고 단순히 메소드를 사용한다.
 const handlePlayClick = () => {
+  // registerView(); // test
   if (videoPlayer.paused) {
     videoPlayer.play();
     playBtn.innerHTML = '<i class="fas fa-pause"></i>';
