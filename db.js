@@ -4,7 +4,7 @@ import "./models/Video";
 
 dotenv.config();
 
-mongoose.connect(process.env.MONGO_URL, {
+mongoose.connect(process.env.MONGO_URL_ATLAS, {
   useNewUrlParser: true,
   useFindAndModify: false,
 });

@@ -7,6 +7,7 @@ import routes from "./routes";
 const s3 = new aws.S3({
   accessKeyId: process.env.AWS_KEY,
   secretAccessKey: process.env.AWS_PRIVATE_KEY,
+  region: "ap-northeast-1",
 });
 
 // multer에서 storage를 설정할 수 있다. default는 nodejs다.
