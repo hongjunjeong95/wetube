@@ -1,7 +1,7 @@
 mixin videoPlayer(video = {})
   // full screen을 주고 싶다면 div 안에 vide를 줘야 한다.
   .videoPlayer#jsVideoPlayer
-    video(src=`/${video.src}`, autoplay)
+    video(src=video.src, autoplay)
     .videoPlayer__controls
       .videoPlayer__column
         span#jsVolumeBtn
