@@ -19,6 +19,7 @@ const multerVideo = multer({
     bucket: "wetube-hongjun/video",
   }),
 });
+
 const multerAvatar = multer({
   storage: multerS3({
     s3,

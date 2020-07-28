@@ -5,10 +5,8 @@
   "main": "index.js",
   "author": "Hongjun Jung",
   "dependencies": {
-    "@babel/core": "^7.10.4",
-    "@babel/node": "^7.10.4",
+    "@babel/node": "^7.10.5",
     "@babel/polyfill": "^7.10.4",
-    "@babel/preset-env": "^7.10.4",
     "autoprefixer": "^9.8.5",
     "aws-sdk": "^2.720.0",
     "axios": "^0.19.2",
@@ -38,16 +36,24 @@
     "postcss-loader": "^3.0.0",
     "pug": "^3.0.0",
     "sass-loader": "^9.0.2",
-    "webpack": "^4.43.0",
+    "webpack": "^4.44.0",
     "webpack-cli": "^3.3.12"
   },
   "scripts": {
-    "dev:server": "nodemon --exec babel-node init.js --ignore '.scss' --ignore 'static' ",
-    "dev:assets": "cross-env WEBPACK_ENV=development webpack -w",
-    "build:assets": "cross-env WEBPACK_ENV=production webpack",
-    "tunnel": "lt --port 4000"
+    "dev:server": "nodemon --exec babel-node src/init.js --ignore '.scss' --ignore 'static' ",
+    "dev:assets": "cd src && cross-env WEBPACK_ENV=development webpack -w",
+    "build:assets": "cd src && cross-env WEBPACK_ENV=production webpack",
+    "build:server": "babel src --out-dir build --ignore 'src/assets','src/static','src/webpack.config.js'",
+    "copyAll": "cp -R src/static build && cp -R src/views build",
+    "build": "npm run build:server && npm run build:assets && npm run copyAll",
+    "prebuild": "rm -rf build",
+    "tunnel": "lt --port 4000",
+    "start": "node build/init.js"
   },
   "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
     "cross-env": "^7.0.2",
     "eslint": "^7.4.0",
     "eslint-config-airbnb-base": "^14.2.0",
