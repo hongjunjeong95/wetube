@@ -7,8 +7,6 @@ const zero = {
   },
 };
 
-console.log(zero);
-
 const VideoSchema = new mongoose.Schema({
   fileUrl: {
     type: String,
