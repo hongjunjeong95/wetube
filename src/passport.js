@@ -1,11 +1,9 @@
 import passport from "passport";
 import GithubStrategy from "passport-github";
 import FacebookStrategy from "passport-facebook";
-// import InstagramStrategy from "passport-instagram";
 import User from "./models/User";
 import {
   githubLoginCallback,
-  // instagramLoginCallback,
   facebookLoginCallback,
 } from "./controllers/userController";
 import routes from "./routes";
@@ -19,7 +17,9 @@ passport.use(
     {
       clientID: process.env.GH_ID,
       clientSecret: process.env.GH_SECRET,
-      callbackURL: `http://localhost:4000${routes.githubCallback}`,
+      callbackURL: process.env.PRODUCTION
+        ? `https://polar-sea-27980.herokuapp.com${routes.githubCallback}`
+        : `http://localhost:4000${routes.githubCallback}`,
     },
     githubLoginCallback
   )
@@ -37,17 +37,6 @@ passport.use(
     facebookLoginCallback
   )
 );
-
-// passport.use(
-//   new InstagramStrategy(
-//     {
-//       clientID: process.env.INSTAGRAM_ID,
-//       clientSecret: process.env.INSTAGRAM_SECRET,
-//       callbackURL: `http://localhost:4000${routes.instagramCallback}`,
-//     },
-//     instagramLoginCallback
-//   )
-// );
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
