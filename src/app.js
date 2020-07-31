@@ -9,6 +9,7 @@ import mongoose from "mongoose";
 import session from "express-session";
 import path from "path";
 import MongoStore from "connect-mongo";
+import flash from "express-flash";
 
 import { localsMiddleware } from "./middlewares";
 import routes from "./routes";
@@ -60,6 +61,9 @@ app.use(
     store: new CookieStore({ mongooseConnection: mongoose.connection }),
   })
 );
+
+// local messges를 사용할 수 있게 해준다.
+app.use(flash());
 
 // express-session을 설치해주자.
 app.use(passport.initialize()); // passport 구동
