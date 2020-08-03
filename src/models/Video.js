@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
-const zero = {
-  body: {
-    type: String,
-    required: "file url",
-  },
-};
+// const zero = {
+//   body: {
+//     type: String,
+//     required: "file url",
+//   },
+// };
 
 const VideoSchema = new mongoose.Schema({
   fileUrl: {

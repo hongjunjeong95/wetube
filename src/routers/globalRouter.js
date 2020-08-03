@@ -1,7 +1,7 @@
-import express from "express";
-import passport from "passport";
-import routes from "../routes";
-import { home, search } from "../controllers/videoController";
+import express from 'express';
+import passport from 'passport';
+import routes from '../routes';
+import { home, search } from '../controllers/videoController';
 import {
   getLogin,
   postLogin,
@@ -13,8 +13,8 @@ import {
   getMe,
   facebookLogin,
   postFacebookLogIn,
-} from "../controllers/userController";
-import { onlyPublic, onlyPrivate } from "../middlewares";
+} from '../controllers/userController';
+import { onlyPublic, onlyPrivate } from '../middlewares';
 
 const globalRouter = express.Router();
 
@@ -32,7 +32,7 @@ globalRouter.get(routes.logout, onlyPrivate, logout);
 globalRouter.get(routes.github, githubLogin);
 globalRouter.get(
   routes.githubCallback,
-  passport.authenticate("github", { failureRedirect: "/login" }),
+  passport.authenticate('github', { failureRedirect: '/login' }),
   postGithubLogIn
 );
 
@@ -40,7 +40,7 @@ globalRouter.get(
 globalRouter.get(routes.facebook, facebookLogin);
 globalRouter.get(
   routes.facebookCallback,
-  passport.authenticate("facebook", { failureRedirect: "/login" }),
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
   postFacebookLogIn
 );
 

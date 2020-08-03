@@ -1,10 +1,10 @@
-import passport from "passport";
-import routes from "../routes";
-import User from "../models/User";
+import passport from 'passport';
+import routes from '../routes';
+import User from '../models/User';
 
 // get방식 join
 export const getJoin = (req, res) => {
-  res.render("join", { pageTitle: "Join" });
+  res.render('join', { pageTitle: 'Join' });
 };
 
 // post방식 join
@@ -15,15 +15,16 @@ export const postJoin = async (req, res, next) => {
   } = req;
   // verify password
   if (password !== password2) {
-    req.flash("error", "Passwords don't match");
+    req.flash('error', "Passwords don't match");
     res.status(400);
-    res.render("join", { pageTitle: "Join" });
+    res.render('join', { pageTitle: 'Join' });
   } else {
     try {
       const user = await User({
         name,
         email,
       });
+      console.log('post user:', user);
       await User.register(user, password);
       next();
     } catch (error) {
@@ -34,18 +35,18 @@ export const postJoin = async (req, res, next) => {
 };
 
 export const getLogin = (req, res) =>
-  res.render("login", { pageTitle: "Log In" });
+  res.render('login', { pageTitle: 'Log In' });
 
-export const postLogin = passport.authenticate("local", {
+export const postLogin = passport.authenticate('local', {
   failureRedirect: routes.login,
   successRedirect: routes.home,
-  successFlash: "Welcome",
+  successFlash: 'Welcome',
   failureFlash: "Can't log in. Check email and/or password",
 });
 
 // Github Login
-export const githubLogin = passport.authenticate("github", {
-  successFlash: "Welcome",
+export const githubLogin = passport.authenticate('github', {
+  successFlash: 'Welcome',
   failureFlash: "Can't log in at this time",
 });
 
@@ -67,6 +68,7 @@ export const githubLoginCallback = async (_, __, profile, cb) => {
       githubId: id,
       avatarUrl,
     });
+
     return cb(null, newUser);
   } catch (error) {
     return cb(error);
@@ -78,8 +80,8 @@ export const postGithubLogIn = (req, res) => {
 };
 
 // Facebook Login
-export const facebookLogin = passport.authenticate("facebook", {
-  successFlash: "Welcome",
+export const facebookLogin = passport.authenticate('facebook', {
+  successFlash: 'Welcome',
   failureFlash: "Can't log in at this time",
 });
 
@@ -113,7 +115,7 @@ export const postFacebookLogIn = (req, res) => {
 };
 
 export const logout = (req, res) => {
-  req.flash("info", "Logged out, see you later");
+  req.flash('info', 'Logged out, see you later');
   req.logout();
   res.redirect(routes.home);
 };
@@ -123,8 +125,8 @@ export const getMe = async (req, res) => {
     user: { id },
   } = req;
   try {
-    const user = await User.findById(id).populate("videos");
-    res.render("userDetail", { pageTitle: "User Detail", user });
+    const user = await User.findById(id).populate('videos');
+    res.render('userDetail', { pageTitle: 'User Detail', user });
   } catch (error) {
     res.redirect(routes.home);
   }
@@ -135,16 +137,16 @@ export const userDetail = async (req, res) => {
     params: { id },
   } = req;
   try {
-    const user = await User.findById(id).populate("videos");
-    res.render("userDetail", { pageTitle: "User Detail", user });
+    const user = await User.findById(id).populate('videos');
+    res.render('userDetail', { pageTitle: 'User Detail', user });
   } catch (error) {
-    req.flash("error", "User not found");
+    req.flash('error', 'User not found');
     res.redirect(routes.home);
   }
 };
 
 export const getEditProfile = (req, res) =>
-  res.render("editProfile", { pageTitle: "Edit Profile" });
+  res.render('editProfile', { pageTitle: 'Edit Profile' });
 
 export const postEditProfile = async (req, res) => {
   const {
@@ -158,10 +160,10 @@ export const postEditProfile = async (req, res) => {
       email,
       avatarUrl: file ? file.location : req.user.avatarUrl,
     });
-    req.flash("success", "Profile updated");
+    req.flash('success', 'Profile updated');
     res.redirect(routes.me);
   } catch (error) {
-    req.flash("error", "Can't update profile");
+    req.flash('error', "Can't update profile");
     res.redirect(routes.editProfile);
   }
 };
@@ -170,7 +172,7 @@ export const postEditProfile = async (req, res) => {
 // newPassword
 // newPassword1
 export const getChangePassword = (req, res) =>
-  res.render("changePassword", { pageTitle: "Change Password" });
+  res.render('changePassword', { pageTitle: 'Change Password' });
 
 export const postChangePassword = async (req, res) => {
   const {
@@ -178,7 +180,7 @@ export const postChangePassword = async (req, res) => {
   } = req;
   try {
     if (newPassword !== newPassword1) {
-      req.flash("error", "Passwords don't match");
+      req.flash('error', "Passwords don't match");
       res.status(400);
       res.redirect(`/users/${routes.changePassword}`);
       return;
@@ -186,7 +188,7 @@ export const postChangePassword = async (req, res) => {
     await req.user.changePassword(oldPassword, newPassword);
     res.redirect(routes.me);
   } catch (error) {
-    req.flash("error", "Can't change password");
+    req.flash('error', "Can't change password");
     res.status(400);
     res.redirect(`/users/${routes.changePassword}`);
   }
